@@ -1,65 +1,198 @@
-import Image from "next/image";
+'use client';
+
+import React, { useState, useEffect } from 'react';
+import { Header } from '@/components/views/Header';
+import { Sidebar } from '@/components/views/Sidebar';
+import { ChatInterface } from '@/components/views/ChatInterface';
+import { Message, ChatSession } from '@/types';
+
+// Mock system prompt
+const SYSTEM_PROMPT = `Du bist limetaxIQ, ein KI-Assistent für deutsche Steuerberater und Steuerkanzleien.
+
+Deine Aufgaben:
+- Beantworte steuerrechtliche Fragen präzise und mit Quellenangaben
+- Unterstütze bei der Mandantenvorbereitung und Fristenverwaltung
+- Erkläre komplexe Sachverhalte verständlich für Steuerberater
+- Gib IMMER Quellen an (z.B. § 1 AO, § 15 EStG)
+
+Antworte immer auf Deutsch, professionell und präzise.
+Bei Unsicherheit: Weise auf Interpretationsspielräume hin.`;
+
+const DATA_SOURCES = [
+  'Abgabenordnung (AO)',
+  'Einkommensteuergesetz (EStG)',
+  'Umsatzsteuergesetz (UStG)',
+  'Mandanten-Datenbank',
+  'BFH-Urteile',
+];
 
 export default function Home() {
+  const [sessions, setSessions] = useState<ChatSession[]>([]);
+  const [currentSessionId, setCurrentSessionId] = useState<string | undefined>();
+  const [messages, setMessages] = useState<Message[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
+
+  // Load sessions from localStorage on mount
+  useEffect(() => {
+    const savedSessions = localStorage.getItem('limetax-sessions');
+    if (savedSessions) {
+      const parsed = JSON.parse(savedSessions);
+      setSessions(parsed);
+      if (parsed.length > 0) {
+        setCurrentSessionId(parsed[0].id);
+        setMessages(parsed[0].messages);
+      }
+    }
+  }, []);
+
+  // Save sessions to localStorage whenever they change
+  useEffect(() => {
+    if (sessions.length > 0) {
+      localStorage.setItem('limetax-sessions', JSON.stringify(sessions));
+    }
+  }, [sessions]);
+
+  const handleNewChat = () => {
+    const newSession: ChatSession = {
+      id: `session-${Date.now()}`,
+      title: 'Neuer Chat',
+      messages: [],
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    };
+    setSessions([newSession, ...sessions]);
+    setCurrentSessionId(newSession.id);
+    setMessages([]);
+  };
+
+  const handleSessionSelect = (sessionId: string) => {
+    const session = sessions.find((s) => s.id === sessionId);
+    if (session) {
+      setCurrentSessionId(sessionId);
+      setMessages(session.messages);
+    }
+  };
+
+  const handleDeleteSession = (sessionId: string) => {
+    const updatedSessions = sessions.filter((s) => s.id !== sessionId);
+    setSessions(updatedSessions);
+    
+    if (currentSessionId === sessionId) {
+      if (updatedSessions.length > 0) {
+        setCurrentSessionId(updatedSessions[0].id);
+        setMessages(updatedSessions[0].messages);
+      } else {
+        setCurrentSessionId(undefined);
+        setMessages([]);
+      }
+    }
+  };
+
+  const handleSendMessage = async (content: string) => {
+    // Create user message
+    const userMessage: Message = {
+      id: `msg-${Date.now()}`,
+      role: 'user',
+      content,
+      timestamp: new Date(),
+    };
+
+    // Add user message to current session
+    const updatedMessages = [...messages, userMessage];
+    setMessages(updatedMessages);
+
+    // Update session title if it's the first message
+    let updatedSessions = sessions;
+    if (currentSessionId) {
+      updatedSessions = sessions.map((session) => {
+        if (session.id === currentSessionId) {
+          return {
+            ...session,
+            title: session.messages.length === 0 ? content.slice(0, 50) : session.title,
+            messages: updatedMessages,
+            updatedAt: new Date(),
+          };
+        }
+        return session;
+      });
+      setSessions(updatedSessions);
+    } else {
+      // Create new session if none exists
+      const newSession: ChatSession = {
+        id: `session-${Date.now()}`,
+        title: content.slice(0, 50),
+        messages: updatedMessages,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      };
+      updatedSessions = [newSession, ...sessions];
+      setSessions(updatedSessions);
+      setCurrentSessionId(newSession.id);
+    }
+
+    // Call API (will be implemented in Phase 7)
+    setIsLoading(true);
+    
+    try {
+      // TODO: Replace with actual API call in Phase 7
+      // For now, simulate API response
+      await new Promise((resolve) => setTimeout(resolve, 1500));
+      
+      const assistantMessage: Message = {
+        id: `msg-${Date.now()}-assistant`,
+        role: 'assistant',
+        content: 'Dies ist eine Mock-Antwort. Die echte LLM-Integration wird in Phase 7 implementiert.',
+        citations: [
+          { id: 'cite-1', source: '§ 1 AO', title: 'Abgabenordnung' },
+        ],
+        timestamp: new Date(),
+      };
+
+      const finalMessages = [...updatedMessages, assistantMessage];
+      setMessages(finalMessages);
+
+      // Update session with assistant message
+      if (currentSessionId) {
+        setSessions(
+          sessions.map((session) => {
+            if (session.id === currentSessionId) {
+              return {
+                ...session,
+                messages: finalMessages,
+                updatedAt: new Date(),
+              };
+            }
+            return session;
+          })
+        );
+      }
+    } catch (error) {
+      console.error('Error sending message:', error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
+    <div className="flex h-screen overflow-hidden">
+      <Sidebar
+        sessions={sessions}
+        currentSessionId={currentSessionId}
+        onSessionSelect={handleSessionSelect}
+        onNewChat={handleNewChat}
+        onDeleteSession={handleDeleteSession}
+      />
+      
+      <div className="flex-1 flex flex-col overflow-hidden">
+        <Header />
+        <ChatInterface
+          messages={messages}
+          onSendMessage={handleSendMessage}
+          isLoading={isLoading}
+          systemPrompt={SYSTEM_PROMPT}
+          dataSources={DATA_SOURCES}
         />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
+      </div>
     </div>
   );
 }
