@@ -6,19 +6,49 @@
     
     "colorPalette": {
       "primary": {
-        "lime": {
-          "50": "#f7fee7",
-          "100": "#ecfccb",
-          "200": "#d9f99d",
-          "300": "#bef264",
-          "400": "#a3e635",
-          "500": "#84cc16",
-          "600": "#65a30d",
-          "700": "#4d7c0f",
-          "800": "#3f6212",
-          "900": "#365314"
+        "orange": {
+          "50": "#FFF9F0",
+          "100": "#FFF3E0",
+          "200": "#FFE7C7",
+          "300": "#FFD9A8",
+          "400": "#F2B76C",
+          "500": "#E89F4F",
+          "600": "#D68838",
+          "700": "#B8722C",
+          "800": "#9A5D23",
+          "900": "#7C4A1C"
         },
-        "description": "Primary brand color - lime green used for CTAs, highlights, and brand elements"
+        "description": "Primary brand color - warm orange used for CTAs and highlights (from limetax.de)"
+      },
+      "accent": {
+        "blue": {
+          "50": "#F0F9FF",
+          "100": "#E0F2FE",
+          "200": "#CFE9FC",
+          "300": "#B8DDFA",
+          "400": "#7CC4F7",
+          "500": "#3BABF5",
+          "600": "#0891D9",
+          "700": "#0678B8",
+          "800": "#055F96",
+          "900": "#044A75"
+        },
+        "description": "Accent color - sky blue for secondary elements (from limetax.de)"
+      },
+      "accent2": {
+        "purple": {
+          "50": "#FAF8FF",
+          "100": "#F4F0FE",
+          "200": "#EBE3FD",
+          "300": "#DDD0FA",
+          "400": "#C5ADF7",
+          "500": "#A88BF3",
+          "600": "#8B69EF",
+          "700": "#7251D9",
+          "800": "#5A3FB8",
+          "900": "#462F96"
+        },
+        "description": "Secondary accent - lavender purple for variety (from limetax.de)"
       },
       
       "neutral": {

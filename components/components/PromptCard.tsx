@@ -16,12 +16,12 @@ export const PromptCard: React.FC<PromptCardProps> = ({
   return (
     <button
       onClick={onClick}
-      className="w-full text-left p-4 bg-white border border-gray-200 rounded-xl hover:border-lime-500 hover:shadow-md transition-all duration-200 hover:transform hover:-translate-y-0.5 group"
+      className="w-full text-left p-4 bg-white border border-gray-200 rounded-xl hover:border-orange-400 hover:shadow-md transition-all duration-200 hover:transform hover:-translate-y-0.5 group"
     >
       <div className="flex items-start gap-3">
         <span className="text-2xl flex-shrink-0">{icon}</span>
         <div className="flex-1 min-w-0">
-          <h3 className="font-semibold text-gray-900 text-sm mb-1 group-hover:text-lime-600 transition-colors">
+          <h3 className="font-semibold text-gray-900 text-sm mb-1 group-hover:text-orange-600 transition-colors">
             {title}
           </h3>
           <p className="text-xs text-gray-500 line-clamp-2">{description}</p>

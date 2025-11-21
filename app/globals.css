@@ -2,37 +2,49 @@
 @import "tailwindcss";
 
 :root {
-  /* Colors from design.json */
-  --background: #f9fafb;
-  --foreground: #111827;
+  /* Colors from limetax.de design */
+  --background: #fffafa;
+  --foreground: #2b2b2b;
   --card: #ffffff;
-  --card-foreground: #111827;
-  --primary: #84cc16;
-  --primary-foreground: #ffffff;
-  --secondary: #f3f4f6;
-  --secondary-foreground: #374151;
+  --card-foreground: #2b2b2b;
+  --primary: #f2b76c;
+  --primary-foreground: #2b2b2b;
+  --secondary: #cfe9fc;
+  --secondary-foreground: #2b2b2b;
   --muted: #f3f4f6;
   --muted-foreground: #6b7280;
-  --accent: #84cc16;
-  --accent-foreground: #ffffff;
+  --accent: #f2b76c;
+  --accent-foreground: #2b2b2b;
   --border: #e5e7eb;
   --input: #d1d5db;
-  --ring: #84cc16;
+  --ring: #f2b76c;
   --radius: 0.75rem;
 }
 
 @theme inline {
-  /* Lime color palette */
-  --color-lime-50: #f7fee7;
-  --color-lime-100: #ecfccb;
-  --color-lime-200: #d9f99d;
-  --color-lime-300: #bef264;
-  --color-lime-400: #a3e635;
-  --color-lime-500: #84cc16;
-  --color-lime-600: #65a30d;
-  --color-lime-700: #4d7c0f;
-  --color-lime-800: #3f6212;
-  --color-lime-900: #365314;
+  /* Orange color palette (primary) */
+  --color-orange-50: #fff9f0;
+  --color-orange-100: #fff3e0;
+  --color-orange-200: #ffe7c7;
+  --color-orange-300: #ffd9a8;
+  --color-orange-400: #f2b76c;
+  --color-orange-500: #e89f4f;
+  --color-orange-600: #d68838;
+  --color-orange-700: #b8722c;
+  --color-orange-800: #9a5d23;
+  --color-orange-900: #7c4a1c;
+
+  /* Blue color palette (accent) */
+  --color-blue-50: #f0f9ff;
+  --color-blue-100: #e0f2fe;
+  --color-blue-200: #cfe9fc;
+  --color-blue-300: #b8ddfa;
+  --color-blue-400: #7cc4f7;
+  --color-blue-500: #3babf5;
+  --color-blue-600: #0891d9;
+  --color-blue-700: #0678b8;
+  --color-blue-800: #055f96;
+  --color-blue-900: #044a75;
 
   /* Gray palette */
   --color-gray-50: #f9fafb;
@@ -46,10 +58,17 @@
   --color-gray-800: #1f2937;
   --color-gray-900: #111827;
 
-  /* Purple accent */
-  --color-purple-light: #e9d5ff;
-  --color-purple-medium: #c084fc;
-  --color-purple-dark: #9333ea;
+  /* Purple color palette (accent2) */
+  --color-purple-50: #faf8ff;
+  --color-purple-100: #f4f0fe;
+  --color-purple-200: #ebe3fd;
+  --color-purple-300: #ddd0fa;
+  --color-purple-400: #c5adf7;
+  --color-purple-500: #a88bf3;
+  --color-purple-600: #8b69ef;
+  --color-purple-700: #7251d9;
+  --color-purple-800: #5a3fb8;
+  --color-purple-900: #462f96;
 
   /* Semantic colors */
   --color-success: #10b981;
@@ -203,29 +222,29 @@ body {
 }
 
 .prose a {
-  color: #84cc16;
+  color: #f2b76c;
   text-decoration: underline;
   transition: all 0.15s ease-in-out;
 }
 
 .prose a:hover {
-  color: #65a30d;
+  color: #e89f4f;
   text-decoration-thickness: 2px;
 }
 
 /* Citation links styling */
 .prose a[href*="gesetze-im-internet.de"] {
   font-weight: 600;
-  background: rgba(132, 204, 22, 0.1);
+  background: rgba(242, 183, 108, 0.15);
   padding: 0.1em 0.3em;
   border-radius: 0.25rem;
   text-decoration: none;
-  border-bottom: 2px solid #84cc16;
+  border-bottom: 2px solid #f2b76c;
 }
 
 .prose a[href*="gesetze-im-internet.de"]:hover {
-  background: rgba(132, 204, 22, 0.2);
-  border-bottom-color: #65a30d;
+  background: rgba(242, 183, 108, 0.25);
+  border-bottom-color: #e89f4f;
 }
 
 .prose table {
@@ -247,44 +266,45 @@ body {
   font-weight: 600;
 }
 
-/* Invert colors for lime gradient backgrounds (user messages) */
+/* Styles for blue background (user messages) */
 .prose-invert {
-  color: white;
+  color: #2b2b2b;
 }
 
 .prose-invert code {
-  background: rgba(255, 255, 255, 0.2);
-  color: white;
+  background: rgba(43, 43, 43, 0.1);
+  color: #2b2b2b;
 }
 
 .prose-invert pre {
-  background: rgba(255, 255, 255, 0.2);
+  background: rgba(43, 43, 43, 0.05);
 }
 
 .prose-invert blockquote {
-  border-left-color: white;
-  color: white;
+  border-left-color: #f2b76c;
+  color: #2b2b2b;
 }
 
 .prose-invert strong {
-  color: white;
+  color: #2b2b2b;
+  font-weight: 600;
 }
 
 .prose-invert a {
-  color: white;
+  color: #d68838;
   text-decoration: underline;
   font-weight: 600;
 }
 
 .prose-invert a:hover {
-  color: rgba(255, 255, 255, 0.9);
+  color: #b8722c;
 }
 
 .prose-invert th {
-  background: rgba(255, 255, 255, 0.2);
+  background: rgba(43, 43, 43, 0.05);
 }
 
 .prose-invert th,
 .prose-invert td {
-  border-color: rgba(255, 255, 255, 0.3);
+  border-color: rgba(43, 43, 43, 0.1);
 }

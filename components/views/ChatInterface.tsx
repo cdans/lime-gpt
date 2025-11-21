@@ -169,7 +169,7 @@ export const ChatInterface: React.FC<ChatInterfaceProps> = ({
               {isLoading && (
                 <div className="flex gap-4 justify-start">
                   <div className="w-10 h-10 rounded-full bg-white flex items-center justify-center shadow-md">
-                    <Loader2 className="w-6 h-6 text-lime-500 animate-spin" />
+                    <Loader2 className="w-6 h-6 text-orange-500 animate-spin" />
                   </div>
                   <div className="px-4 py-3 bg-gray-50 border border-gray-200 rounded-2xl rounded-tl-sm">
                     <p className="text-sm text-gray-500">Denke nach...</p>
@@ -197,7 +197,7 @@ export const ChatInterface: React.FC<ChatInterfaceProps> = ({
                 disabled={isLoading}
                 minRows={1}
                 maxRows={8}
-                className="w-full px-4 py-3 text-sm bg-white border border-gray-300 rounded-xl outline-none transition-all duration-150 resize-none focus:border-lime-500 focus:ring-4 focus:ring-lime-500/10 disabled:opacity-50 disabled:cursor-not-allowed"
+                className="w-full px-4 py-3 text-sm bg-white border border-gray-300 rounded-xl outline-none transition-all duration-150 resize-none focus:border-orange-400 focus:ring-4 focus:ring-orange-400/10 disabled:opacity-50 disabled:cursor-not-allowed"
                 style={{
                   lineHeight: "1.5",
                 }}

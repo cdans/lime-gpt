@@ -46,7 +46,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
                 key={session.id}
                 className={`group flex items-center gap-2 px-3 py-2.5 rounded-lg cursor-pointer transition-all ${
                   currentSessionId === session.id
-                    ? "bg-lime-50 border border-lime-200"
+                    ? "bg-orange-50 border border-orange-200"
                     : "hover:bg-gray-50"
                 }`}
                 onClick={() => onSessionSelect(session.id)}

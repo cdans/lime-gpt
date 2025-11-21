@@ -90,7 +90,7 @@ export const ChatMessage: React.FC<ChatMessageProps> = ({ message }) => {
         <div
           className={`px-4 py-3 rounded-2xl ${
             isUser
-              ? "bg-lime-600 text-white rounded-tr-sm shadow-md"
+              ? "bg-blue-200 text-gray-900 rounded-tr-sm shadow-md"
               : "bg-gray-50 border border-gray-200 rounded-tl-sm shadow-sm"
           }`}
         >
@@ -161,7 +161,7 @@ export const ChatMessage: React.FC<ChatMessageProps> = ({ message }) => {
 
       {isUser && (
         <div className="flex-shrink-0">
-          <div className="w-10 h-10 rounded-full bg-gradient-to-br from-purple-400 to-purple-600 flex items-center justify-center shadow-md">
+          <div className="w-10 h-10 rounded-full bg-purple-400 flex items-center justify-center shadow-md">
             <User className="w-5 h-5 text-white" />
           </div>
         </div>
